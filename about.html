@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | A S Ashwin</title>
+  <meta name="description" content="Learn more about A S Ashwin — finance background, postgraduate management journey, and personal interests." />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ── About-specific layout ── */
+    .about-main-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
+
+    .about-sidebar {
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-8));
+    }
+
+    .profile-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--accent-light), var(--slate-100));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      font-size: var(--text-4xl);
+      color: var(--slate-400);
+      border: 3px solid var(--accent-light);
+    }
+
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: var(--space-1);
+    }
+
+    .profile-title {
+      font-size: var(--text-sm);
+      color: var(--slate-500);
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .profile-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--slate-600);
+      transition: all var(--transition);
+      text-decoration: none;
+      border: 1px solid var(--slate-200);
+    }
+
+    .profile-link i {
+      color: var(--accent);
+      width: 1rem;
+      text-align: center;
+    }
+
+    .profile-link:hover {
+      background: var(--accent-pale);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Story blocks ── */
+    .story-section {
+      margin-bottom: var(--space-12);
+      padding-bottom: var(--space-12);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .story-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    /* ── Values grid ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .value-card {
+      padding: var(--space-6);
+      background: var(--accent-pale);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--accent);
+    }
+
+    .value-card i {
+      font-size: var(--text-xl);
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+      display: block;
+    }
+
+    .value-card h4 {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+
+    .value-card p {
+      font-size: var(--text-sm);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    /* ── Hobbies ── */
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .hobby-card {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-6);
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+    }
+
+    .hobby-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hobby-icon {
+      width: 3rem;
+      height: 3rem;
+      background: var(--accent-light);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: var(--text-lg);
+      flex-shrink: 0;
+    }
+
+    .hobby-title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: var(--space-1);
+    }
+
+    .hobby-desc {
+      font-size: var(--text-sm);
+      color: var(--slate-500);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* ── Transition callout ── */
+    .callout {
+      background: linear-gradient(135deg, var(--accent-pale), var(--accent-light));
+      border: 1px solid var(--accent-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-block: var(--space-8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: '\201C';
+      position: absolute;
+      top: -0.5rem;
+      left: var(--space-6);
+      font-size: 8rem;
+      color: var(--accent);
+      opacity: 0.12;
+      font-family: var(--font-display);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .callout-text {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--slate-900);
+      font-family: var(--font-display);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 900px) {
+      .about-main-layout {
+        grid-template-columns: 1fr;
+      }
+      .about-sidebar { position: static; }
+    }
+
+    @media (max-width: 600px) {
+      .values-grid, .hobby-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+    <!-- ── NAVIGATION ── -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-brand">AS<span>.</span>Ashwin</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="career.html">Career</a></li>
+        <li><a href="academic-journey.html">Academic</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li class="nav-dropdown" id="navDropdown">
+          <button class="nav-dropdown-toggle" id="navDropdownToggle" aria-haspopup="true" aria-expanded="false">
+            More <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="achievements.html" role="menuitem"><i class="fas fa-trophy"></i> Achievements</a>
+            <a href="participation.html" role="menuitem"><i class="fas fa-certificate"></i> Participation</a>
+            <a href="courses.html" role="menuitem"><i class="fas fa-book-open"></i> Courses</a>
+            <a href="publications.html" role="menuitem"><i class="fas fa-scroll"></i> Publications</a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="contact.html" role="menuitem"><i class="fas fa-paper-plane"></i> Contact</a>
+          </div>
+        </li>
+        <li><a href="Ashwin-Resume.pdf" class="nav-resume" target="_blank"><i class="fas fa-download"></i> Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HEADER ── -->
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Get to know me</span>
+      <h1>About Me</h1>
+      <p>Finance professional in transition, management student by choice, perpetual learner by nature.</p>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="about-main-layout">
+
+          <!-- Sidebar -->
+          <aside class="about-sidebar reveal">
+            <div class="profile-card">
+              <div class="profile-photo" aria-label="Profile photo placeholder">
+                <i class="fas fa-user" aria-hidden="true"></i>
+              </div>
+              <p class="profile-name">A S Ashwin</p>
+              <p class="profile-title">PG Management Student<br>Finance Professional</p>
+              <div class="profile-links">
+                <a href="mailto:ashwin22as@gmail.com" class="profile-link">
+                  <i class="fas fa-envelope"></i>
+                  ashwin22as@gmail.com
+                </a>
+                <a href="https://github.com/glitch-047" target="_blank" rel="noopener" class="profile-link">
+                  <i class="fab fa-github"></i>
+                  github/glitch-047
+                </a>
+                <a href="https://www.linkedin.com/in/ashwin-a-s-323aa7279" target="_blank" rel="noopener" class="profile-link">
+                  <i class="fab fa-linkedin-in"></i>
+                  linkedin/ashwin-a-s
+                </a>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Story content -->
+          <article>
+
+            <!-- Background -->
+            <div class="story-section reveal">
+              <p class="section-label"><i class="fas fa-seedling" aria-hidden="true"></i> My Background</p>
+              <h2 class="section-heading">Rooted in Finance,<br>Branching into Management</h2>
+              <p>
+                I began my professional journey in <strong>corporate accounting and finance</strong> — a world defined by precision, accountability, and meticulous attention to detail. Working in that environment gave me a solid foundation in how organisations actually function beneath the surface: cash flows, compliance, ledgers, and the quiet discipline of getting numbers right.
+              </p>
+              <p>
+                My undergraduate degree in <strong>B.Com (Professional Accounting)</strong> at Kumaraguru College sharpened both my technical skills and my understanding of business fundamentals. But the more I learned, the more I wanted to zoom out — to understand strategy, leadership, and the human side of organisations.
+              </p>
+            </div>
+
+            <!-- Transition -->
+            <div class="story-section reveal">
+              <p class="section-label"><i class="fas fa-route" aria-hidden="true"></i> The Transition</p>
+              <h2 class="section-heading">From the Balance Sheet<br>to the Bigger Picture</h2>
+
+              <div class="callout">
+                <p class="callout-text">
+                  "Finance taught me to read a business. Management is teaching me to lead one."
+                </p>
+              </div>
+
+              <p>
+                Moving into postgraduate management studies was a deliberate choice. I wanted to take the analytical rigour I'd built in finance and combine it with a broader set of leadership, strategy, and organisational skills. The transition wasn't a departure — it was an evolution.
+              </p>
+              <p>
+                Today I sit at an interesting intersection: I can understand a P&amp;L as fluently as I can facilitate a team discussion. I think that cross-disciplinary perspective is one of my genuine strengths, and it's something I continue to develop.
+              </p>
+            </div>
+
+            <!-- Values -->
+            <div class="story-section reveal">
+              <p class="section-label"><i class="fas fa-compass" aria-hidden="true"></i> What I Stand For</p>
+              <h2 class="section-heading">The principles I work by</h2>
+              <div class="values-grid">
+                <div class="value-card">
+                  <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                  <h4>Integrity</h4>
+                  <p>Doing the right thing, especially when it's inconvenient. Non-negotiable.</p>
+                </div>
+                <div class="value-card">
+                  <i class="fas fa-lightbulb" aria-hidden="true"></i>
+                  <h4>Creativity</h4>
+                  <p>Approaching problems from unexpected angles and resisting the first obvious answer.</p>
+                </div>
+                <div class="value-card">
+                  <i class="fas fa-users" aria-hidden="true"></i>
+                  <h4>Community</h4>
+                  <p>Leadership is service. I measure success by how much I've helped those around me grow.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hobbies -->
+            <div class="story-section reveal">
+              <p class="section-label"><i class="fas fa-gamepad" aria-hidden="true"></i> Outside Work</p>
+              <h2 class="section-heading">The fun side</h2>
+              <p>
+                I firmly believe that who you are outside of work shapes how you think inside it. Here's what keeps my mind sharp and curious when I'm not studying or at a desk.
+              </p>
+              <div class="hobby-grid">
+                <div class="hobby-card">
+                  <div class="hobby-icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                  <div>
+                    <p class="hobby-title">PC Hardware &amp; Building</p>
+                    <p class="hobby-desc">There's something deeply satisfying about assembling a machine from components — understanding every part, troubleshooting thermals, optimising performance.</p>
+                  </div>
+                </div>
+                <div class="hobby-card">
+                  <div class="hobby-icon"><i class="fas fa-gamepad" aria-hidden="true"></i></div>
+                  <div>
+                    <p class="hobby-title">Gaming</p>
+                    <p class="hobby-desc">Strategy games, open worlds, competitive multiplayer — gaming has taught me more about decision-making under pressure than I expected.</p>
+                  </div>
+                </div>
+                <div class="hobby-card">
+                  <div class="hobby-icon"><i class="fas fa-laptop-code" aria-hidden="true"></i></div>
+                  <div>
+                    <p class="hobby-title">Web Development</p>
+                    <p class="hobby-desc">Building the web as a hobby — from tinkering with HTML &amp; CSS to exploring JavaScript. This very portfolio is a product of that curiosity.</p>
+                  </div>
+                </div>
+                <div class="hobby-card">
+                  <div class="hobby-icon"><i class="fas fa-book" aria-hidden="true"></i></div>
+                  <div>
+                    <p class="hobby-title">Reading &amp; Learning</p>
+                    <p class="hobby-desc">Business strategy, technology trends, human psychology — I find that reading broadly makes me a better thinker in every area.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="reveal" style="display:flex; gap: var(--space-4); flex-wrap:wrap; padding-top: var(--space-4);">
+              <a href="career.html" class="btn btn-primary">
+                <i class="fas fa-briefcase"></i> See my career
+              </a>
+              <a href="contact.html" class="btn btn-ghost">
+                <i class="fas fa-paper-plane"></i> Get in touch
+              </a>
+            </div>
+
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ── -->
+    <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-brand">AS<span>.</span>Ashwin</a>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="career.html">Career</a>
+          <a href="experience.html">Experience</a>
+          <a href="skills.html">Skills</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-copy">&copy; 2025 A S Ashwin. Designed &amp; built by Ashwin.</p>
+    </div>
+  </footer>
+
+  
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    const navDropdown = document.getElementById('navDropdown');
+    const navDropdownToggle = document.getElementById('navDropdownToggle');
+
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open);
+      navToggle.querySelector('i').className = open ? 'fas fa-times' : 'fas fa-bars';
+    });
+
+    navDropdownToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = navDropdown.classList.toggle('open');
+      navDropdownToggle.setAttribute('aria-expanded', open);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navDropdown.contains(e.target)) navDropdown.classList.remove('open');
+    });
+
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .nav-dropdown-menu a').forEach(a => {
+      if (a.getAttribute('href') === page) {
+        a.classList.add('active');
+        const dd = a.closest('.nav-dropdown');
+        if (dd) dd.querySelector('.nav-dropdown-toggle').style.color = 'var(--accent)';
+      }
+    });
+
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    if (scrollBtn) {
+      window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', window.scrollY > 400));
+      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
