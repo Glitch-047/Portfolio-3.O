@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personality Profile | A S Ashwin</title>
+  <meta name="description" content="A S Ashwin's personality profile — Big Five, RIASEC, and Career Discovery results." />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ─── Page intro banner ─── */
+    .psy-intro {
+      background: linear-gradient(135deg, var(--slate-900) 0%, #1a3254 60%, #0c2340 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10) var(--space-12);
+      margin-bottom: var(--space-16);
+      display: flex;
+      align-items: center;
+      gap: var(--space-10);
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .psy-intro::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .psy-intro-text { flex: 1; min-width: 260px; position: relative; }
+    .psy-intro-text h2 { color: var(--white); font-size: var(--text-2xl); margin-bottom: var(--space-3); }
+    .psy-intro-text p  { color: var(--slate-400); font-size: var(--text-base); line-height: 1.7; margin-bottom: 0; }
+    .psy-intro-badges  { display: flex; flex-wrap: wrap; gap: var(--space-3); position: relative; }
+    .psy-source-badge  {
+      display: flex; align-items: center; gap: var(--space-2);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg); padding: var(--space-3) var(--space-5);
+      color: var(--slate-300); font-size: var(--text-sm); font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .psy-source-badge i { color: var(--accent); }
+
+    /* ─── Section wrapper ─── */
+    .psy-section {
+      margin-bottom: var(--space-16);
+    }
+    .psy-section-header {
+      display: flex; align-items: center; gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-5);
+      border-bottom: 2px solid var(--slate-100);
+    }
+    .psy-section-icon {
+      width: 3rem; height: 3rem;
+      border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--text-xl); flex-shrink: 0;
+    }
+    .psy-section-title  { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; color: var(--slate-900); margin-bottom: var(--space-1); }
+    .psy-section-source { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate-400); }
+
+    /* ─── BIG FIVE ─── */
+    .big5-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-5);
+    }
+    .big5-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6) var(--space-7);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+    }
+    .big5-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .big5-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); }
+    .big5-name { font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--slate-900); display: flex; align-items: center; gap: var(--space-2); }
+    .big5-name i { font-size: var(--text-lg); }
+    .big5-score-wrap { text-align: right; }
+    .big5-score { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 800; line-height: 1; }
+    .big5-level { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-400); }
+    .big5-track {
+      background: var(--slate-100); border-radius: var(--radius-full); height: 8px; overflow: hidden; margin-bottom: var(--space-4);
+    }
+    .big5-fill {
+      height: 100%; border-radius: var(--radius-full);
+      width: 0; transition: width 1.3s cubic-bezier(.4,0,.2,1);
+    }
+    .big5-desc { font-size: var(--text-sm); color: var(--slate-500); line-height: 1.65; margin-bottom: 0; }
+
+    /* Big Five colour coding */
+    .bf-n { --c: #8B5CF6; }   /* purple  — Neuroticism      */
+    .bf-e { --c: #3B82F6; }   /* blue    — Extraversion     */
+    .bf-o { --c: #EC4899; }   /* pink    — Openness         */
+    .bf-a { --c: #F59E0B; }   /* amber   — Agreeableness    */
+    .bf-c { --c: #10B981; }   /* green   — Conscientiousness*/
+    .big5-name i, .big5-score { color: var(--c); }
+    .big5-fill { background: var(--c); }
+
+    /* ─── RIASEC hexagon bar chart ─── */
+    .riasec-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+      align-items: start;
+    }
+    .riasec-bars { display: flex; flex-direction: column; gap: var(--space-4); }
+    .riasec-row  { display: flex; align-items: center; gap: var(--space-4); }
+    .riasec-label {
+      width: 130px; flex-shrink: 0;
+      font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700;
+      color: var(--slate-700); display: flex; align-items: center; gap: var(--space-2);
+    }
+    .riasec-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .riasec-track { flex: 1; background: var(--slate-100); border-radius: var(--radius-full); height: 10px; overflow: hidden; }
+    .riasec-fill  { height: 100%; border-radius: var(--radius-full); width: 0; transition: width 1.3s cubic-bezier(.4,0,.2,1); }
+    .riasec-val   { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 800; color: var(--slate-900); width: 2.5rem; text-align: right; }
+
+    /* RIASEC hex visual */
+    .riasec-hex-wrap { display: flex; flex-direction: column; align-items: center; gap: var(--space-5); }
+    .riasec-hex-svg  { width: 100%; max-width: 280px; }
+    .riasec-top-badge {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      background: var(--accent-light); border: 1px solid var(--accent);
+      border-radius: var(--radius-xl); padding: var(--space-4) var(--space-6);
+      text-align: left;
+    }
+    .riasec-top-badge i { font-size: var(--text-2xl); color: var(--accent); }
+    .riasec-top-badge strong { font-family: var(--font-display); font-size: var(--text-base); font-weight: 800; color: var(--slate-900); display: block; }
+    .riasec-top-badge span  { font-size: var(--text-xs); color: var(--slate-500); }
+
+    /* ─── Career Fit ─── */
+    .career-podium {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-bottom: var(--space-10);
+    }
+    .career-pod {
+      border-radius: var(--radius-xl); padding: var(--space-7);
+      text-align: center; position: relative; overflow: hidden;
+      border: 2px solid transparent; transition: all var(--transition);
+    }
+    .career-pod:hover { transform: translateY(-3px); box-shadow: var(--shadow-xl); }
+    .career-pod-1 { background: linear-gradient(135deg,#EFF6FF,#DBEAFE); border-color: #93C5FD; }
+    .career-pod-2 { background: linear-gradient(135deg,#FFFBEB,#FEF3C7); border-color: #FCD34D; }
+    .career-pod-3 { background: linear-gradient(135deg,#F0FDF4,#DCFCE7); border-color: #86EFAC; }
+    .career-pod-rank { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate-500); margin-bottom: var(--space-2); }
+    .career-pod-pct  { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 800; line-height: 1; margin-bottom: var(--space-3); }
+    .career-pod-1 .career-pod-pct { color: #1D4ED8; }
+    .career-pod-2 .career-pod-pct { color: #D97706; }
+    .career-pod-3 .career-pod-pct { color: #15803D; }
+    .career-pod-title { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; color: var(--slate-900); line-height: 1.3; margin-bottom: var(--space-3); }
+    .career-pod-desc  { font-size: var(--text-xs); color: var(--slate-500); line-height: 1.6; margin-bottom: 0; }
+
+    /* Career full ranking table */
+    .career-table { width: 100%; border-collapse: collapse; }
+    .career-table th {
+      text-align: left; padding: var(--space-3) var(--space-4);
+      font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-500);
+      border-bottom: 2px solid var(--slate-200);
+    }
+    .career-table td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--slate-100); font-size: var(--text-sm); vertical-align: middle; }
+    .career-table tr:last-child td { border-bottom: none; }
+    .career-table tr:hover td { background: var(--slate-50); }
+    .rank-num { font-family: var(--font-display); font-weight: 800; color: var(--slate-400); }
+    .rank-num.strong { color: #1D4ED8; }
+    .rank-num.moderate { color: #D97706; }
+    .rank-num.emerging { color: var(--slate-400); }
+    .fit-bar-wrap { display: flex; align-items: center; gap: var(--space-3); }
+    .fit-bar-track { flex: 1; background: var(--slate-100); border-radius: var(--radius-full); height: 6px; overflow: hidden; max-width: 120px; }
+    .fit-bar-fill  { height: 100%; border-radius: var(--radius-full); width: 0; transition: width 1.3s cubic-bezier(.4,0,.2,1); }
+    .fit-pct { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; min-width: 3.5rem; }
+    .fit-strong   .fit-bar-fill { background: #2563EB; }
+    .fit-strong   .fit-pct { color: #1D4ED8; }
+    .fit-moderate .fit-bar-fill { background: #D97706; }
+    .fit-moderate .fit-pct { color: #D97706; }
+    .fit-emerging .fit-bar-fill { background: var(--slate-400); }
+    .fit-emerging .fit-pct { color: var(--slate-500); }
+
+    /* ─── Strengths ─── */
+    .strengths-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+    .strength-col-title {
+      font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: var(--space-5); display: flex; align-items: center; gap: var(--space-2);
+    }
+    .strength-col-title.green { color: #15803D; }
+    .strength-col-title.orange { color: #D97706; }
+    .strength-item {
+      display: flex; align-items: flex-start; gap: var(--space-4);
+      padding: var(--space-5); border-radius: var(--radius-lg);
+      background: var(--white); border: 1px solid var(--slate-200);
+      margin-bottom: var(--space-3); box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+    }
+    .strength-item:hover { transform: translateX(4px); border-color: var(--accent-light); }
+    .strength-rank {
+      width: 2rem; height: 2rem; border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: var(--text-xs); font-weight: 800;
+      flex-shrink: 0;
+    }
+    .rank-green  { background: #DCFCE7; color: #15803D; }
+    .rank-orange { background: #FEF3C7; color: #D97706; }
+    .strength-body strong { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; color: var(--slate-900); display: block; margin-bottom: 2px; }
+    .strength-body p { font-size: var(--text-xs); color: var(--slate-500); margin-bottom: 0; line-height: 1.5; }
+    .strength-score {
+      margin-left: auto; flex-shrink: 0;
+      font-family: var(--font-display); font-size: var(--text-sm); font-weight: 800;
+    }
+    .score-green  { color: #15803D; }
+    .score-orange { color: #D97706; }
+
+    /* ─── Work style chips ─── */
+    .workstyle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--space-4);
+    }
+    .workstyle-card {
+      background: var(--white); border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl); padding: var(--space-6);
+      box-shadow: var(--shadow-sm); transition: all var(--transition);
+    }
+    .workstyle-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: var(--accent-light); }
+    .workstyle-icon { font-size: var(--text-2xl); margin-bottom: var(--space-3); display: block; }
+    .workstyle-card h4 { font-family: var(--font-display); font-size: var(--text-base); font-weight: 700; color: var(--slate-900); margin-bottom: var(--space-2); }
+    .workstyle-card p  { font-size: var(--text-sm); color: var(--slate-500); line-height: 1.65; margin-bottom: 0; }
+
+    /* ─── Disclaimer ─── */
+    .psy-disclaimer {
+      background: var(--slate-50); border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg); padding: var(--space-5) var(--space-6);
+      font-size: var(--text-xs); color: var(--slate-500); line-height: 1.7;
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      margin-top: var(--space-16);
+    }
+    .psy-disclaimer i { color: var(--slate-400); flex-shrink: 0; margin-top: 2px; }
+
+    @media (max-width: 768px) {
+      .riasec-layout, .strengths-layout, .career-podium { grid-template-columns: 1fr; }
+      .big5-grid { grid-template-columns: 1fr; }
+      .psy-intro { padding: var(--space-8); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-brand">AS<span>.</span>Ashwin</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="career.html">Career</a></li>
+        <li><a href="academic-journey.html">Academic</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li class="nav-dropdown" id="navDropdown">
+          <button class="nav-dropdown-toggle" id="navDropdownToggle" aria-haspopup="true" aria-expanded="false">
+            More <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="achievements.html" role="menuitem"><i class="fas fa-trophy"></i> Achievements</a>
+            <a href="participation.html" role="menuitem"><i class="fas fa-certificate"></i> Participation</a>
+            <a href="courses.html" role="menuitem"><i class="fas fa-book-open"></i> Courses</a>
+            <a href="publications.html" role="menuitem"><i class="fas fa-scroll"></i> Publications</a>
+            <a href="personality.html" role="menuitem"><i class="fas fa-brain"></i> Personality</a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="contact.html" role="menuitem"><i class="fas fa-paper-plane"></i> Contact</a>
+          </div>
+        </li>
+        <li><a href="Ashwin-Resume.pdf" class="nav-resume" target="_blank"><i class="fas fa-download"></i> Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Self-awareness in data</span>
+      <h1>Personality Profile</h1>
+      <p>How I think, what drives me, and where I'm headed — backed by structured psychometric assessments.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+
+        <!-- Intro banner -->
+        <div class="psy-intro reveal">
+          <div class="psy-intro-text">
+            <h2>Three lenses. One picture.</h2>
+            <p>This page synthesises results from three validated assessments taken in August 2026 — the Big Five Personality Test, the Holland Code (RIASEC) Interest Inventory, and the Board Infinity Career Discovery Report. Together they paint a consistent portrait: analytical, conscientious, assertive, and oriented toward finance and people-leadership roles.</p>
+          </div>
+          <div class="psy-intro-badges">
+            <div class="psy-source-badge"><i class="fas fa-brain"></i> Big Five (OCEAN)</div>
+            <div class="psy-source-badge"><i class="fas fa-compass"></i> RIASEC / Holland Code</div>
+            <div class="psy-source-badge"><i class="fas fa-chart-bar"></i> Board Infinity Career Discovery</div>
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════
+             SECTION 1 — BIG FIVE
+             ══════════════════════════════════════════ -->
+        <div class="psy-section reveal">
+          <div class="psy-section-header">
+            <div class="psy-section-icon" style="background:#F3E8FF; color:#7C3AED;">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div>
+              <p class="psy-section-title">The Big Five (OCEAN)</p>
+              <p class="psy-section-source">Source: bigfive-test.com · August 2026</p>
+            </div>
+          </div>
+
+          <div class="big5-grid" id="big5Grid">
+
+            <!-- Conscientiousness — highest, lead with it -->
+            <div class="big5-card bf-c reveal">
+              <div class="big5-card-top">
+                <p class="big5-name"><i class="fas fa-bullseye"></i> Conscientiousness</p>
+                <div class="big5-score-wrap">
+                  <div class="big5-score">100</div>
+                  <div class="big5-level">Very High</div>
+                </div>
+              </div>
+              <div class="big5-track"><div class="big5-fill" data-w="100"></div></div>
+              <p class="big5-desc">Sets clear goals and pursues them with determination. Highly organised, dutiful, and achievement-driven — people regard you as reliable and hard-working. Strong in self-efficacy, orderliness, and cautiousness.</p>
+            </div>
+
+            <!-- Openness -->
+            <div class="big5-card bf-o reveal">
+              <div class="big5-card-top">
+                <p class="big5-name"><i class="fas fa-lightbulb"></i> Openness to Experience</p>
+                <div class="big5-score-wrap">
+                  <div class="big5-score">77</div>
+                  <div class="big5-level">High</div>
+                </div>
+              </div>
+              <div class="big5-track"><div class="big5-fill" data-w="77"></div></div>
+              <p class="big5-desc">Curious, imaginative, and creative. Enjoys novelty, variety, and change. High in artistic interests and intellect — comfortable with abstract ideas and new approaches.</p>
+            </div>
+
+            <!-- Agreeableness -->
+            <div class="big5-card bf-a reveal">
+              <div class="big5-card-top">
+                <p class="big5-name"><i class="fas fa-handshake"></i> Agreeableness</p>
+                <div class="big5-score-wrap">
+                  <div class="big5-score">67</div>
+                  <div class="big5-level">Moderate–High</div>
+                </div>
+              </div>
+              <div class="big5-track"><div class="big5-fill" data-w="67"></div></div>
+              <p class="big5-desc">Cooperative and sympathetic, with a strong sense of morality and candour. Scores high in sympathy (14) and cooperation (13) — prefers harmony but holds clear ethical standards.</p>
+            </div>
+
+            <!-- Extraversion -->
+            <div class="big5-card bf-e reveal">
+              <div class="big5-card-top">
+                <p class="big5-name"><i class="fas fa-bolt"></i> Extraversion</p>
+                <div class="big5-score-wrap">
+                  <div class="big5-score">66</div>
+                  <div class="big5-level">Moderate</div>
+                </div>
+              </div>
+              <div class="big5-track"><div class="big5-fill" data-w="66"></div></div>
+              <p class="big5-desc">Introverted in social preference but assertive and active when engaged. High in assertiveness (19/20) and activity level (14) — leads confidently while valuing selective socialisation.</p>
+            </div>
+
+            <!-- Neuroticism -->
+            <div class="big5-card bf-n reveal">
+              <div class="big5-card-top">
+                <p class="big5-name"><i class="fas fa-shield-halved"></i> Neuroticism</p>
+                <div class="big5-score-wrap">
+                  <div class="big5-score">54</div>
+                  <div class="big5-level">Low–Moderate</div>
+                </div>
+              </div>
+              <div class="big5-track"><div class="big5-fill" data-w="54"></div></div>
+              <p class="big5-desc">Exceptionally calm, composed, and unflappable under pressure. Low scores on depression (7) and immoderation (4) indicate strong emotional regulation and poised decision-making.</p>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════
+             SECTION 2 — RIASEC
+             ══════════════════════════════════════════ -->
+        <div class="psy-section reveal">
+          <div class="psy-section-header">
+            <div class="psy-section-icon" style="background:#E0F2FE; color:#0284C7;">
+              <i class="fas fa-compass"></i>
+            </div>
+            <div>
+              <p class="psy-section-title">Holland Code (RIASEC)</p>
+              <p class="psy-section-source">Source: Open-Source Psychometrics Project · August 2026 · Scale 0–32</p>
+            </div>
+          </div>
+
+          <div class="riasec-layout">
+            <div class="riasec-bars" id="riasecBars">
+
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#6366F1;"></span> Investigative</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="75" style="background:#6366F1;"></div></div>
+                <div class="riasec-val">24</div>
+              </div>
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#10B981;"></span> Social</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="69" style="background:#10B981;"></div></div>
+                <div class="riasec-val">22</div>
+              </div>
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#F59E0B;"></span> Conventional</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="69" style="background:#F59E0B;"></div></div>
+                <div class="riasec-val">22</div>
+              </div>
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#EC4899;"></span> Enterprising</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="66" style="background:#EC4899;"></div></div>
+                <div class="riasec-val">21</div>
+              </div>
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#8B5CF6;"></span> Artistic</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="63" style="background:#8B5CF6;"></div></div>
+                <div class="riasec-val">20</div>
+              </div>
+              <div class="riasec-row">
+                <div class="riasec-label"><span class="riasec-dot" style="background:#64748B;"></span> Realistic</div>
+                <div class="riasec-track"><div class="riasec-fill" data-w="53" style="background:#64748B;"></div></div>
+                <div class="riasec-val">17</div>
+              </div>
+
+            </div>
+
+            <div class="riasec-hex-wrap">
+              <!-- SVG hexagon chart -->
+              <svg class="riasec-hex-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style>
+                    .hex-bg    { fill: none; stroke: #E2E8F0; stroke-width: 1; }
+                    .hex-data  { fill: rgba(99,102,241,0.15); stroke: #6366F1; stroke-width: 2; stroke-linejoin: round; }
+                    .hex-label { font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700; fill: #475569; }
+                    .hex-dot   { fill: #6366F1; }
+                  </style>
+                </defs>
+                <!-- Background rings -->
+                <g transform="translate(140,140)">
+                  <!-- 3 rings at 25%, 50%, 75% of max(32) -->
+                  <polygon class="hex-bg" points="0,-40 34.6,-20 34.6,20 0,40 -34.6,20 -34.6,-20"/>
+                  <polygon class="hex-bg" points="0,-60 52,-30 52,30 0,60 -52,-30 -52,-60"/>
+                  <polygon class="hex-bg" points="0,-80 69.3,-40 69.3,40 0,80 -69.3,40 -69.3,-40"/>
+                  <!-- Axes -->
+                  <line x1="0" y1="0" x2="0" y2="-100" stroke="#E2E8F0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="86.6" y2="-50" stroke="#E2E8F0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="86.6" y2="50" stroke="#E2E8F0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="0" y2="100" stroke="#E2E8F0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="-86.6" y2="50" stroke="#E2E8F0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="-86.6" y2="-50" stroke="#E2E8F0" stroke-width="1"/>
+                  <!-- Data polygon: I=24,S=22,C=22,E=21,A=20,R=17 (max 32, radius 100) -->
+                  <!-- Angles: top=I, top-right=S, bottom-right=C, bottom=E, bottom-left=A, top-left=R -->
+                  <!-- I: 24/32*100=75 → (0,-75) -->
+                  <!-- S: 22/32*100=68.75 → (68.75*sin60,−68.75*cos60)=(59.5,−34.4) -->
+                  <!-- C: 22/32*100=68.75 → (59.5,34.4) -->
+                  <!-- E: 21/32*100=65.6 → (0,65.6) -->
+                  <!-- A: 20/32*100=62.5 → (−54.1,31.25) -->
+                  <!-- R: 17/32*100=53.1 → (−46,−26.6) -->
+                  <polygon class="hex-data" points="0,-75 59.5,-34.4 59.5,34.4 0,65.6 -54.1,31.25 -46,-26.6"/>
+                  <!-- Data dots -->
+                  <circle class="hex-dot" cx="0" cy="-75" r="4"/>
+                  <circle class="hex-dot" cx="59.5" cy="-34.4" r="4"/>
+                  <circle class="hex-dot" cx="59.5" cy="34.4" r="4"/>
+                  <circle class="hex-dot" cx="0" cy="65.6" r="4"/>
+                  <circle class="hex-dot" cx="-54.1" cy="31.25" r="4"/>
+                  <circle class="hex-dot" cx="-46" cy="-26.6" r="4"/>
+                  <!-- Labels -->
+                  <text class="hex-label" x="0" y="-108" text-anchor="middle">Investigative</text>
+                  <text class="hex-label" x="96" y="-46" text-anchor="start">Social</text>
+                  <text class="hex-label" x="96" y="52" text-anchor="start">Conventional</text>
+                  <text class="hex-label" x="0" y="118" text-anchor="middle">Enterprising</text>
+                  <text class="hex-label" x="-96" y="52" text-anchor="end">Artistic</text>
+                  <text class="hex-label" x="-96" y="-46" text-anchor="end">Realistic</text>
+                </g>
+              </svg>
+
+              <div class="riasec-top-badge">
+                <i class="fas fa-magnifying-glass-chart"></i>
+                <div>
+                  <strong>Top type: Investigative (I)</strong>
+                  <span>Analytical, curious, methodical thinker</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════
+             SECTION 3 — CAREER FIT
+             ══════════════════════════════════════════ -->
+        <div class="psy-section reveal">
+          <div class="psy-section-header">
+            <div class="psy-section-icon" style="background:#DCFCE7; color:#15803D;">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <div>
+              <p class="psy-section-title">Career Discovery Report</p>
+              <p class="psy-section-source">Source: Board Infinity · August 2026 · 74 questions · 21 minutes</p>
+            </div>
+          </div>
+
+          <!-- Top 3 podium -->
+          <div class="career-podium">
+            <div class="career-pod career-pod-1 reveal">
+              <p class="career-pod-rank">#1 Match</p>
+              <p class="career-pod-pct">92.9%</p>
+              <p class="career-pod-title">Wealth, Insurance &amp; Financial Products RM</p>
+              <p class="career-pod-desc">Advise high-net-worth clients on investment portfolios, insurance planning, and financial products to help them achieve long-term wealth goals.</p>
+            </div>
+            <div class="career-pod career-pod-2 reveal">
+              <p class="career-pod-rank">#2 Match</p>
+              <p class="career-pod-pct">90.2%</p>
+              <p class="career-pod-title">Consumer Durables (FMCD) Field Sales &amp; Ops</p>
+              <p class="career-pod-desc">Drive consumer durable sales through showrooms and dealer networks, manage after-sales service operations, and build brand presence in local markets.</p>
+            </div>
+            <div class="career-pod career-pod-3 reveal">
+              <p class="career-pod-rank">#3 Match</p>
+              <p class="career-pod-pct">89.1%</p>
+              <p class="career-pod-title">Operations, Supply Chain &amp; Logistics</p>
+              <p class="career-pod-desc">Optimise supply chain operations, manage logistics and inventory, drive operational efficiency across manufacturing and distribution networks.</p>
+            </div>
+          </div>
+
+          <!-- Full ranking table -->
+          <div class="card reveal" style="padding: var(--space-2) 0; overflow: hidden;">
+            <table class="career-table" id="careerTable">
+              <thead>
+                <tr>
+                  <th style="width:3rem;">Rank</th>
+                  <th>Career Path</th>
+                  <th>Fit Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="rank-num strong">1</td><td>Wealth, Insurance &amp; Financial Products RM</td><td class="fit-bar-wrap fit-strong"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="92.9"></div></div><span class="fit-pct">92.9%</span></td></tr>
+                <tr><td class="rank-num strong">2</td><td>Consumer Durables (FMCD) Field Sales &amp; Ops</td><td class="fit-bar-wrap fit-strong"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="90.2"></div></div><span class="fit-pct">90.2%</span></td></tr>
+                <tr><td class="rank-num strong">3</td><td>Operations, Supply Chain &amp; Logistics</td><td class="fit-bar-wrap fit-strong"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="89.1"></div></div><span class="fit-pct">89.1%</span></td></tr>
+                <tr><td class="rank-num strong">4</td><td>EdTech Sales, BD &amp; Counselling</td><td class="fit-bar-wrap fit-strong"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="89.0"></div></div><span class="fit-pct">89.0%</span></td></tr>
+                <tr><td class="rank-num strong">5</td><td>Finance, Tax, Audit &amp; Compliance Advisory</td><td class="fit-bar-wrap fit-strong"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="88.9"></div></div><span class="fit-pct">88.9%</span></td></tr>
+                <tr><td class="rank-num moderate">6</td><td>SaaS / Tech B2B Sales &amp; Business Development</td><td class="fit-bar-wrap fit-moderate"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="86.8"></div></div><span class="fit-pct">86.8%</span></td></tr>
+                <tr><td class="rank-num moderate">7</td><td>IT Consulting, BPM &amp; Technology Services</td><td class="fit-bar-wrap fit-moderate"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="85.7"></div></div><span class="fit-pct">85.7%</span></td></tr>
+                <tr><td class="rank-num moderate">8</td><td>Retail Banking, Branch &amp; Relationship Banking</td><td class="fit-bar-wrap fit-moderate"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="81.8"></div></div><span class="fit-pct">81.8%</span></td></tr>
+                <tr><td class="rank-num moderate">9</td><td>B2B Industrial, Specs &amp; Projects Sales</td><td class="fit-bar-wrap fit-moderate"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="80.8"></div></div><span class="fit-pct">80.8%</span></td></tr>
+                <tr><td class="rank-num moderate">10</td><td>Strategy, Management &amp; Business Consulting</td><td class="fit-bar-wrap fit-moderate"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="79.1"></div></div><span class="fit-pct">79.1%</span></td></tr>
+                <tr><td class="rank-num emerging">11</td><td>Real Estate Sales, Advisory &amp; Transactions</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="78.3"></div></div><span class="fit-pct">78.3%</span></td></tr>
+                <tr><td class="rank-num emerging">12</td><td>HR, Talent Acquisition &amp; People Operations</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="77.9"></div></div><span class="fit-pct">77.9%</span></td></tr>
+                <tr><td class="rank-num emerging">13</td><td>Brand, Digital &amp; Growth Marketing</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="76.1"></div></div><span class="fit-pct">76.1%</span></td></tr>
+                <tr><td class="rank-num emerging">14</td><td>FMCG Territory &amp; Distribution Sales</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="70.5"></div></div><span class="fit-pct">70.5%</span></td></tr>
+                <tr><td class="rank-num emerging">15</td><td>Market Research, Analytics &amp; Insights</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="69.3"></div></div><span class="fit-pct">69.3%</span></td></tr>
+                <tr><td class="rank-num emerging">16</td><td>General Management Trainee – Mfg &amp; Conglomerates</td><td class="fit-bar-wrap fit-emerging"><div class="fit-bar-track"><div class="fit-bar-fill" data-w="68.6"></div></div><span class="fit-pct">68.6%</span></td></tr>
+              </tbody>
+            </table>
+            <div style="display:flex; gap:var(--space-6); padding:var(--space-4) var(--space-6); border-top:1px solid var(--slate-100); flex-wrap:wrap;">
+              <span style="font-size:var(--text-xs); color:var(--slate-500); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#2563EB;display:inline-block;"></span> Top 5 — Strong Fit</span>
+              <span style="font-size:var(--text-xs); color:var(--slate-500); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#D97706;display:inline-block;"></span> Middle — Moderate Fit</span>
+              <span style="font-size:var(--text-xs); color:var(--slate-500); display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#94A3B8;display:inline-block;"></span> Bottom — Emerging</span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════
+             SECTION 4 — STRENGTHS & GAPS
+             ══════════════════════════════════════════ -->
+        <div class="psy-section reveal">
+          <div class="psy-section-header">
+            <div class="psy-section-icon" style="background:#FEF3C7; color:#D97706;">
+              <i class="fas fa-star"></i>
+            </div>
+            <div>
+              <p class="psy-section-title">Strengths &amp; Development Areas</p>
+              <p class="psy-section-source">Source: Board Infinity Career Discovery · Competency Self-Assessment · Score out of 5</p>
+            </div>
+          </div>
+
+          <div class="strengths-layout">
+            <!-- Top Strengths -->
+            <div>
+              <p class="strength-col-title green"><i class="fas fa-star"></i> Top 5 Strengths</p>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-green">1</div>
+                <div class="strength-body">
+                  <strong>Communication (Verbal &amp; Presentation)</strong>
+                  <p>Articulates ideas clearly, presents confidently, and holds audience attention in group settings.</p>
+                </div>
+                <span class="strength-score score-green">5.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-green">2</div>
+                <div class="strength-body">
+                  <strong>Leadership &amp; People Management</strong>
+                  <p>Leads teams, delegates effectively, and motivates people toward common goals.</p>
+                </div>
+                <span class="strength-score score-green">5.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-green">3</div>
+                <div class="strength-body">
+                  <strong>Time Management &amp; Prioritisation</strong>
+                  <p>Manages time effectively, sets priorities, and delivers results within deadlines.</p>
+                </div>
+                <span class="strength-score score-green">5.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-green">4</div>
+                <div class="strength-body">
+                  <strong>Target Orientation &amp; Revenue Focus</strong>
+                  <p>Consistently pursues and meets targets with a results-first mindset.</p>
+                </div>
+                <span class="strength-score score-green">5.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-green">5</div>
+                <div class="strength-body">
+                  <strong>Marketing Campaign Planning &amp; Execution</strong>
+                  <p>Plans and executes campaigns with clarity and follow-through.</p>
+                </div>
+                <span class="strength-score score-green">5.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+            </div>
+
+            <!-- Development Areas -->
+            <div>
+              <p class="strength-col-title orange"><i class="fas fa-arrow-trend-up"></i> Top 5 Development Areas</p>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-orange">1</div>
+                <div class="strength-body">
+                  <strong>Product Metrics &amp; North Star Framework</strong>
+                  <p>A key competency for target career paths — currently the primary focus area.</p>
+                </div>
+                <span class="strength-score score-orange">1.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-orange">2</div>
+                <div class="strength-body">
+                  <strong>Client Relationship Management (CRM)</strong>
+                  <p>Critical for Wealth Management and Financial Services career paths.</p>
+                </div>
+                <span class="strength-score score-orange">1.3<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-orange">3</div>
+                <div class="strength-body">
+                  <strong>Market Sizing &amp; Go-To-Market Strategy</strong>
+                  <p>Foundational for consulting and BD roles in the top career paths.</p>
+                </div>
+                <span class="strength-score score-orange">3.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-orange">4</div>
+                <div class="strength-body">
+                  <strong>Marketing Analytics &amp; Attribution</strong>
+                  <p>Data-driven marketing competency for growth and brand roles.</p>
+                </div>
+                <span class="strength-score score-orange">3.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+
+              <div class="strength-item reveal">
+                <div class="strength-rank rank-orange">5</div>
+                <div class="strength-body">
+                  <strong>Tech-Savviness &amp; Digital Tool Fluency</strong>
+                  <p>Increasingly required across all modern management and sales roles.</p>
+                </div>
+                <span class="strength-score score-orange">3.0<small style="font-size:10px;font-weight:400;">/5</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════════
+             SECTION 5 — WORK STYLE SUMMARY
+             ══════════════════════════════════════════ -->
+        <div class="psy-section reveal">
+          <div class="psy-section-header">
+            <div class="psy-section-icon" style="background:var(--accent-light); color:var(--accent);">
+              <i class="fas fa-user-gear"></i>
+            </div>
+            <div>
+              <p class="psy-section-title">How I Work</p>
+              <p class="psy-section-source">Synthesised from Big Five + RIASEC + Career Discovery assessments</p>
+            </div>
+          </div>
+
+          <div class="workstyle-grid">
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">🎯</span>
+              <h4>Goal-driven &amp; Structured</h4>
+              <p>Very high Conscientiousness means I work best with clear objectives, structured timelines, and a strong sense of accountability. I finish what I start.</p>
+            </div>
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">🔍</span>
+              <h4>Analytical before Action</h4>
+              <p>My top RIASEC type is Investigative — I prefer to understand a problem deeply before acting. I'm comfortable with ambiguity but resolve it through data and reasoning.</p>
+            </div>
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">🗣️</span>
+              <h4>Assertive Communicator</h4>
+              <p>High Assertiveness (19/20) within moderate Extraversion — I speak up, take charge in discussions, and lead confidently, while also knowing when to listen.</p>
+            </div>
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">🧘</span>
+              <h4>Calm Under Pressure</h4>
+              <p>Low Neuroticism scores indicate exceptional emotional regulation. I tend to stay composed and clear-thinking in stressful or high-stakes situations.</p>
+            </div>
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">💡</span>
+              <h4>Creative &amp; Open to Ideas</h4>
+              <p>High Openness (77) means I genuinely enjoy new approaches, creative problem-solving, and intellectual curiosity — not just incremental thinking.</p>
+            </div>
+            <div class="workstyle-card reveal">
+              <span class="workstyle-icon">🤝</span>
+              <h4>People-Aware, Not People-Pleasing</h4>
+              <p>Moderate-high Agreeableness with low Modesty — I'm cooperative and empathetic, but I'll disagree when the situation calls for it and stand by my position.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="psy-disclaimer reveal">
+          <i class="fas fa-circle-info"></i>
+          <span>All assessments on this page were taken voluntarily in August 2026 for self-reflection and career exploration purposes. Scores represent self-reported responses and should be interpreted as one data point among many, not as definitive or clinical measurements. The Big Five test was sourced from bigfive-test.com; the RIASEC test from the Open-Source Psychometrics Project; the Career Discovery Report from Board Infinity.</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-brand">AS<span>.</span>Ashwin</a>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="career.html">Career</a>
+          <a href="experience.html">Experience</a>
+          <a href="skills.html">Skills</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-copy">&copy; 2025 A S Ashwin. Designed &amp; built by Ashwin.</p>
+    </div>
+  </footer>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <script>
+    /* ── Nav ── */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    const navDropdown = document.getElementById('navDropdown');
+    const navDropdownToggle = document.getElementById('navDropdownToggle');
+    navToggle.addEventListener('click', () => { const o = navLinks.classList.toggle('open'); navToggle.setAttribute('aria-expanded',o); navToggle.querySelector('i').className = o ? 'fas fa-times':'fas fa-bars'; });
+    navDropdownToggle.addEventListener('click', (e) => { e.stopPropagation(); const o = navDropdown.classList.toggle('open'); navDropdownToggle.setAttribute('aria-expanded',o); });
+    document.addEventListener('click', (e) => { if (!navDropdown.contains(e.target)) navDropdown.classList.remove('open'); });
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .nav-dropdown-menu a').forEach(a => { if (a.getAttribute('href') === page) { a.classList.add('active'); const dd = a.closest('.nav-dropdown'); if (dd) dd.querySelector('.nav-dropdown-toggle').style.color = 'var(--accent)'; } });
+
+    /* ── Scroll-to-top ── */
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', window.scrollY > 400));
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ── Animate bars on scroll ── */
+    const barObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.big5-fill, .riasec-fill, .fit-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        barObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.big5-grid, .riasec-bars, #careerTable tbody').forEach(el => barObs.observe(el));
+
+    /* ── Reveal ── */
+    const revObs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+  </script>
+</body>
+</html>
